@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
+
 import { fetchItinerary, sendAIMessage } from "../api/api";
 
 import ItineraryInputForm from "../components/ItineraryInputForm";
@@ -98,9 +100,6 @@ export default function Home() {
       {/* Initial Form View */}
       {!hasSubmitted && (
         <div className="flex flex-col items-center justify-center h-full">
-          <h1 className="text-3xl font-semibold text-[rgb(var(--blue))] mb-6">
-            Itinerary Generator
-          </h1>
           <ItineraryInputForm
             destination={destination}
             date={date}
@@ -113,13 +112,23 @@ export default function Home() {
         </div>
       )}
 
-      {/* Post-Submit View */}
       {hasSubmitted && result && (
         <>
-          <div className="max-w-3xl w-full mx-auto px-6 pt-6 pb-2 h-[6=60%]">
+          <motion.div
+            initial={{ x: -100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+            className="max-w-3xl w-full mx-auto px-6 pt-6 pb-2 h-[60%]"
+          >
             <GeneratedItinerary result={result} />
-          </div>
-          <div className="flex-1 h-[40%]">
+          </motion.div>
+
+          <motion.div
+            initial={{ x: 100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 1.2, ease: "easeOut", delay: 0.4 }}
+            className="flex-1 h-[40%]"
+          >
             <ChatSection
               messages={messages}
               inputMessage={inputMessage}
@@ -127,7 +136,7 @@ export default function Home() {
               onChangeMessage={setInputMessage}
               onSendMessage={handleSendMessage}
             />
-          </div>
+          </motion.div>
         </>
       )}
     </div>

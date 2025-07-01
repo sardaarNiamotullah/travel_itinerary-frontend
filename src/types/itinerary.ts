@@ -33,6 +33,17 @@ export interface ChatSectionProps {
   onSendMessage: () => void;
 }
 
+export interface ItineraryInputFormProps {
+  destination: string;
+  date: string;
+  loading: boolean;
+  error: string | null;
+  onDestinationChange: (value: string) => void;
+  onDateChange: (value: string) => void;
+  onSubmit: () => void;
+}
+
+
 export interface Wind {
   speed: number;
   gusts: number;

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import ChatBubble from "./ChatBubble";
-import type { ChatSectionProps } from "../types/itinerary";
+import type { ChatSectionProps, Message } from "../types/itinerary";
 
 export default function ChatSection({
   messages,
@@ -22,16 +22,29 @@ export default function ChatSection({
     }
   };
 
+  // Generate welcome message once
+  const welcomeMessageRef = useRef<Message>({
+    id: "welcome-message",
+    text: "Do you have anything in mind regarding my generated travel itinerary for you?",
+    sender: "bot",
+    timestamp: new Date(),
+  });
+
   return (
     <div className="h-full flex flex-col">
       {/* Scrollable Messages */}
       <main className="max-w-3xl w-full mx-auto px-6 flex-1 overflow-y-auto py-4">
         <div className="flex flex-col space-y-4 justify-end min-h-full">
+          {/* Hardcoded Welcome Message */}
+          <ChatBubble message={welcomeMessageRef.current} />
+
+          {/* Actual Chat Messages */}
           {messages.map((msg) => (
             <ChatBubble key={msg.id} message={msg} />
           ))}
+
           {loading && (
-            <div className="self-start text-sm text-gray-500 italic">
+            <div className="self-start text-sm text-[rgb(var(--golden))] italic">
               Typing...
             </div>
           )}
@@ -48,13 +61,13 @@ export default function ChatSection({
             value={inputMessage}
             onChange={(e) => onChangeMessage(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="flex-1 border border-gray-300 px-5 py-3 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-[rgb(var(--blue))]"
+            className="flex-1 border border-[rgb(var(--golden))] px-5 py-3 rounded-full focus:outline-none placeholder-[rgb(var(--white))] text-[rgb(var(--white))] bg-transparent"
             disabled={loading}
           />
           <button
             onClick={onSendMessage}
             disabled={loading || !inputMessage.trim()}
-            className="bg-[rgb(var(--blue))] text-white px-6 py-3 rounded-full hover:opacity-90 disabled:opacity-50"
+            className="bg-[rgb(var(--golden))] text-black px-6 py-3 rounded-full hover:opacity-90 disabled:opacity-50"
           >
             Send
           </button>

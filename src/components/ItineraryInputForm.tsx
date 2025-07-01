@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { ItineraryInputFormProps } from "../types/itinerary";
 import { validateDate } from "../utils/dateValidator";
+import { motion } from "framer-motion";
 
 export default function ItineraryInputForm({
   destination,
@@ -18,7 +19,6 @@ export default function ItineraryInputForm({
     onDateChange(newDate);
     if (dateError) setDateError(null);
 
-    // Real-time validation
     if (newDate) {
       const { error } = validateDate(newDate);
       if (error) setDateError(error);
@@ -38,37 +38,59 @@ export default function ItineraryInputForm({
   };
 
   return (
-    <div className="space-y-4 p-6 max-w-md mx-auto">
-      <input
-        type="text"
-        placeholder="Enter Destination"
-        value={destination}
-        onChange={(e) => onDestinationChange(e.target.value)}
-        className="w-full border border-gray-300 px-5 py-3 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[rgb(var(--blue))]"
-      />
-
-      <input
-        type="date"
-        value={date}
-        onChange={handleDateChange}
-        className="w-full border border-gray-300 px-5 py-3 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[rgb(var(--blue))]"
-        placeholder="YYYY-MM-DD"
-        pattern="\d{4}-\d{2}-\d{2}"
-      />
-
-      <button
-        onClick={handleSubmit}
-        className="w-full bg-[rgb(var(--blue))] text-white py-3 rounded-xl font-semibold hover:bg-opacity-90 transition-all"
-        disabled={loading}
+    <div className="min-h-screen flex items-center justify-center bg-transparent text-[rgb(var(--white))]">
+      <form
+        onSubmit={handleSubmit}
+        className="space-y-6 w-full max-w-md px-6 py-8"
       >
-        {loading ? "Loading..." : "Submit"}
-      </button>
+        <motion.h1
+          initial={{ y: -50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="text-3xl font-semibold text-[rgb(var(--golden))] mb-6 text-center"
+        >
+          Itinerary Generator
+        </motion.h1>
 
-      {/* Show date errors below submit button */}
-      {dateError && <p className="text-red-600">{dateError}</p>}
-      
-      {/* Show API errors below date errors */}
-      {error && !dateError && <p className="text-red-600">{error}</p>}
+        <motion.input
+          type="text"
+          placeholder="Enter Destination"
+          value={destination}
+          onChange={(e) => onDestinationChange(e.target.value)}
+          initial={{ x: -100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+          className="w-full bg-transparent border-b-2 border-[rgb(var(--golden))] text-center text-[rgb(var(--white))] placeholder-[rgb(var(--white))] focus:outline-none focus:border-[rgb(var(--golden))] py-2 focus:placeholder-transparent"
+        />
+
+        <motion.input
+          type="date"
+          value={date}
+          onChange={handleDateChange}
+          initial={{ x: 100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
+          className="w-full bg-transparent border-b-2 border-[rgb(var(--golden))] text-center text-[rgb(var(--white))] placeholder-[rgb(var(--golden))] focus:outline-none focus:border-[rgb(var(--golden))] py-2"
+          placeholder="YYYY-MM-DD"
+          pattern="\d{4}-\d{2}-\d{2}"
+        />
+
+        <motion.button
+          type="submit"
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.6 }}
+          className="mt-[1rem] w-full bg-[rgb(var(--golden))] text-[rgb(var(--dark))] py-3 rounded-xl font-semibold hover:bg-opacity-90 transition-all disabled:opacity-50"
+          disabled={loading}
+        >
+          {loading ? "Loading..." : "Generate Itinerary"}
+        </motion.button>
+
+        {dateError && <p className="text-red-400 text-center">{dateError}</p>}
+        {error && !dateError && (
+          <p className="text-red-400 text-center">{error}</p>
+        )}
+      </form>
     </div>
   );
 }
