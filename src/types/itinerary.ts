@@ -25,6 +25,14 @@ export interface ItineraryInputFormProps {
   onSubmit: () => void;
 }
 
+export interface ChatSectionProps {
+  messages: Message[];
+  inputMessage: string;
+  loading: boolean;
+  onChangeMessage: (value: string) => void;
+  onSendMessage: () => void;
+}
+
 export interface Wind {
   speed: number;
   gusts: number;

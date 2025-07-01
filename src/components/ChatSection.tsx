@@ -1,14 +1,6 @@
 import { useEffect, useRef } from "react";
 import ChatBubble from "./ChatBubble";
-import type { Message } from "../types/itinerary";
-
-interface ChatSectionProps {
-  messages: Message[];
-  inputMessage: string;
-  loading: boolean;
-  onChangeMessage: (value: string) => void;
-  onSendMessage: () => void;
-}
+import type { ChatSectionProps } from "../types/itinerary";
 
 export default function ChatSection({
   messages,

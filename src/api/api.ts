@@ -7,8 +7,6 @@ export const fetchItinerary = async (
   date: string
 ): Promise<ItineraryResponse> => {
   const payload = { destination, date };
-  //   console.log("Sending to backend:", payload);
-
   const response = await api.post<ItineraryResponse>("/itinerary/", payload);
   return response.data;
 };

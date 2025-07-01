@@ -20,14 +20,26 @@ export default function Home() {
   const handleSubmitSearch = async () => {
     setLoading(true);
     setError(null);
-    setResult(null);
 
     try {
       const data = await fetchItinerary(destination, date);
       setResult(data);
-      setHasSubmitted(true); // switch to itinerary + chat layout
+      setHasSubmitted(true);
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : "An unknown error occurred.");
+      if (err instanceof Error) {
+        // Transform specific backend errors to user-friendly messages
+        if (
+          err.message.includes("Place ID") &&
+          err.message.includes("does not exist")
+        ) {
+          setError("Please enter a valid city name.");
+        } else {
+          // Fallback to original message for other errors
+          setError(err.message);
+        }
+      } else {
+        setError("An unexpected error occurred.");
+      }
     } finally {
       setLoading(false);
     }
@@ -50,7 +62,9 @@ export default function Home() {
     try {
       const payload = {
         message: userMessage.text,
-        ...(result?.ai_itinerary ? { itinerary_data: result.ai_itinerary } : {}),
+        ...(result?.ai_itinerary
+          ? { itinerary_data: result.ai_itinerary }
+          : {}),
       };
 
       const response = await sendAIMessage(payload);
