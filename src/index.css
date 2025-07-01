@@ -13,9 +13,12 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
+  
+  --white: 249, 247, 247;
   --blue: 0, 0, 139;
-  --blue-light: 185, 217, 235;
+  --blue-light: 63, 114, 175;
+  --dark: 34, 40, 49;
+  --beige:239, 228, 210;
   --golden: 255, 215, 0;
 }
 

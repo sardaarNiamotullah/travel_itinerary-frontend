@@ -31,10 +31,10 @@ export default function ChatSection({
   };
 
   return (
-    <>
+    <div className="h-full flex flex-col">
       {/* Scrollable Messages */}
-      <main className="max-w-3xl w-full mx-auto px-6 overflow-y-auto flex-1 py-4 max-h-[62vh]">
-        <div className="flex flex-col space-y-4 min-h-full justify-end">
+      <main className="max-w-3xl w-full mx-auto px-6 flex-1 overflow-y-auto py-4">
+        <div className="flex flex-col space-y-4 justify-end min-h-full">
           {messages.map((msg) => (
             <ChatBubble key={msg.id} message={msg} />
           ))}
@@ -68,6 +68,6 @@ export default function ChatSection({
           </button>
         </div>
       </footer>
-    </>
+    </div>
   );
 }

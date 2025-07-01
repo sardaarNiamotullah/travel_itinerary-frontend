@@ -15,6 +15,7 @@ export default function Home() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [hasSubmitted, setHasSubmitted] = useState(false); // NEW
 
   const handleSubmitSearch = async () => {
     setLoading(true);
@@ -24,6 +25,7 @@ export default function Home() {
     try {
       const data = await fetchItinerary(destination, date);
       setResult(data);
+      setHasSubmitted(true); // switch to itinerary + chat layout
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "An unknown error occurred.");
     } finally {
@@ -79,31 +81,41 @@ export default function Home() {
 
   return (
     <div className="h-screen flex flex-col bg-[color:var(--blue-light)] text-black overflow-hidden">
-      <header className="max-w-3xl w-full mx-auto p-6 pt-12 flex-shrink-0">
-        <h1 className="text-3xl font-semibold text-[rgb(var(--blue))] mb-6">
-          🌍 Travel Assistant
-        </h1>
+      {/* Initial Form View */}
+      {!hasSubmitted && (
+        <div className="flex flex-col items-center justify-center h-full">
+          <h1 className="text-3xl font-semibold text-[rgb(var(--blue))] mb-6">
+            Itinerary Generator
+          </h1>
+          <ItineraryInputForm
+            destination={destination}
+            date={date}
+            loading={loading}
+            error={error}
+            onDestinationChange={setDestination}
+            onDateChange={setDate}
+            onSubmit={handleSubmitSearch}
+          />
+        </div>
+      )}
 
-        <ItineraryInputForm
-          destination={destination}
-          date={date}
-          loading={loading}
-          error={error}
-          onDestinationChange={setDestination}
-          onDateChange={setDate}
-          onSubmit={handleSubmitSearch}
-        />
-
-        {result && <GeneratedItinerary result={result} />}
-      </header>
-
-      <ChatSection
-        messages={messages}
-        inputMessage={inputMessage}
-        loading={loading}
-        onChangeMessage={setInputMessage}
-        onSendMessage={handleSendMessage}
-      />
+      {/* Post-Submit View */}
+      {hasSubmitted && result && (
+        <>
+          <div className="max-w-3xl w-full mx-auto px-6 pt-6 pb-2 h-[6=60%]">
+            <GeneratedItinerary result={result} />
+          </div>
+          <div className="flex-1 h-[40%]">
+            <ChatSection
+              messages={messages}
+              inputMessage={inputMessage}
+              loading={loading}
+              onChangeMessage={setInputMessage}
+              onSendMessage={handleSendMessage}
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 }
