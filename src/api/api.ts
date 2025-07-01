@@ -1,14 +1,6 @@
 // src/api/api.ts
 import api from "../lib/axios";
-import type { ItineraryResponse } from "../types/itinerary";
-
-export interface AIChatRequest {
-  message: string;
-}
-
-export interface AIChatResponse {
-  reply: string;
-}
+import type { ItineraryResponse, AIChatRequest, AIChatResponse } from "../types/itinerary";
 
 export const fetchItinerary = async (
   destination: string,

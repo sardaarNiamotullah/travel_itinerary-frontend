@@ -1,5 +1,20 @@
 // src/types/itinerary.ts
 
+export type Message = {
+  id: string;
+  text: string;
+  sender: "user" | "bot";
+  timestamp: Date;
+};
+
+export interface AIChatRequest {
+  message: string;
+}
+
+export interface AIChatResponse {
+  reply: string;
+}
+
 export interface Wind {
   speed: number;
   gusts: number;
