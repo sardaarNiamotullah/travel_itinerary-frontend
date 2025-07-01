@@ -1,69 +1,73 @@
-# React + TypeScript + Vite
+## [Click Here](https://github.com/sardaarNiamotullah/travel_itinerary-frontend) to see the github repo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+## ✈️ Travel Itinerary – Frontend
+This is the frontend of the Travel Itinerary application, built with React, TypeScript, Tailwind CSS, and powered by Vite for blazing-fast development and build performance. It interacts with a Django REST API backend to fetch AI-generated travel itineraries and weather insights.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+To use this application, you'll need to obtain API keys from the following services:
 
-## Expanding the ESLint configuration
+## ⚙️ Tech Stack
+- ⚛️ React 19
+- 🧠 TypeScript
+- 🎨 Tailwind CSS
+- ⚡ Vite
+- 🌐 Axios – For making HTTP requests
+- 🎞 Framer Motion – For smooth UI animations
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🚀 Getting Started
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Prerequisites
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+- Node 18+ 
+- npm 9+
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### Installation
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+1. **Clone the repository**
+   ```bash
+   https://github.com/sardaarNiamotullah/travel_itinerary-frontend.git
+   cd travel_itinerary-backend.git
+   ```
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+2. Create a virtual environment:
+   ```bash
+   python -m venv env
+   # If this do not work then try with this
+   python3 -m venv env
+   # Now activate it
+   source env/bin/activate  # On Windows: env\Scripts\activate
+   ```
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+3. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+5. **Run the development server** 
+   ```bash
+   npm run dev
+   ```
+
+## Contributing
+
+Got an idea to make it even better? Fork it, code it, and create a PR — contributions are **always welcome**!
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+
+## 🖋️ Author
+
+**Sardaar Niamotullah**
+
+## Acknowledgments
+
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- Axios
+- Framer Motion
