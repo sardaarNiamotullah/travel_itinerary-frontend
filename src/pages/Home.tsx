@@ -71,43 +71,50 @@ export default function Home() {
   };
 
   const handleSendMessage = async () => {
-  if (!inputMessage.trim()) return;
+    if (!inputMessage.trim()) return;
 
-  const userMessage: Message = {
-    id: Date.now().toString(),
-    text: inputMessage,
-    sender: "user",
-    timestamp: new Date(),
+    const userMessage: Message = {
+      id: Date.now().toString(),
+      text: inputMessage,
+      sender: "user",
+      timestamp: new Date(),
+    };
+
+    setMessages((prev) => [...prev, userMessage]);
+    setInputMessage("");
+    setIsLoading(true);
+
+    try {
+      const aiRequestPayload = {
+        message: userMessage.text,
+        ...(result?.ai_itinerary
+          ? { itinerary_data: result.ai_itinerary }
+          : {}),
+      };
+
+      const response = await sendAIMessage(aiRequestPayload);
+
+      const botReply: Message = {
+        id: (Date.now() + 1).toString(),
+        text: response.reply,
+        sender: "bot",
+        timestamp: new Date(),
+      };
+
+      setMessages((prev) => [...prev, botReply]);
+    } catch (error) {
+      console.error("Failed to get AI reply:", error);
+      const errorReply: Message = {
+        id: (Date.now() + 2).toString(),
+        text: "Sorry, something went wrong while fetching the AI reply.",
+        sender: "bot",
+        timestamp: new Date(),
+      };
+      setMessages((prev) => [...prev, errorReply]);
+    } finally {
+      setIsLoading(false);
+    }
   };
-
-  setMessages((prev) => [...prev, userMessage]);
-  setInputMessage("");
-  setIsLoading(true);
-
-  try {
-    const response = await sendAIMessage(userMessage.text);
-
-    const botReply: Message = {
-      id: (Date.now() + 1).toString(),
-      text: response.reply,
-      sender: "bot",
-      timestamp: new Date(),
-    };
-
-    setMessages((prev) => [...prev, botReply]);
-  } catch (error) {
-    console.error("Failed to get AI reply:", error);
-    const errorReply: Message = {
-      id: (Date.now() + 2).toString(),
-      text: "Sorry, something went wrong while fetching the AI reply.",
-      sender: "bot",
-      timestamp: new Date(),
-    };
-    setMessages((prev) => [...prev, errorReply]);
-  } finally {
-    setIsLoading(false);
-  }
-};
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {

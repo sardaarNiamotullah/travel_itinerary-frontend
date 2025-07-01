@@ -1,6 +1,14 @@
-// src/api/itinerary.ts
+// src/api/api.ts
 import api from "../lib/axios";
 import type { ItineraryResponse } from "../types/itinerary";
+
+export interface AIChatRequest {
+  message: string;
+}
+
+export interface AIChatResponse {
+  reply: string;
+}
 
 export const fetchItinerary = async (
   destination: string,
@@ -13,18 +21,12 @@ export const fetchItinerary = async (
   return response.data;
 };
 
-export interface AIChatRequest {
-  message: string;
-}
-
-export interface AIChatResponse {
-  reply: string;
-}
-
-export const sendAIMessage = async (message: string): Promise<AIChatResponse> => {
-  const response = await api.post<AIChatResponse>("/itinerary/aichat/", {
-    message,
-  });
+export const sendAIMessage = async (
+  request: AIChatRequest
+): Promise<AIChatResponse> => {
+  const response = await api.post<AIChatResponse>(
+    "/itinerary/aichat/",
+    request
+  );
   return response.data;
 };
-
